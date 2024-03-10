@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/lestrrat-go/file-rotatelogs/internal/fileutil"
 	strftime "github.com/lestrrat-go/strftime"
+	"github.com/living4life/file-rotatelogs/internal/fileutil"
 	"github.com/pkg/errors"
 )
 
@@ -126,13 +126,14 @@ func (rl *RotateLogs) getWriterNolock(bailOnRotateFail, useGenerationalNames boo
 	filename := baseFn
 	var forceNewFile bool
 
-	fi, err := os.Stat(rl.curFn)
 	sizeRotation := false
-	if err == nil && rl.rotationSize > 0 && rl.rotationSize <= fi.Size() {
-		forceNewFile = true
-		sizeRotation = true
+	if rl.rotationSize > 0 {
+		fi, err := os.Stat(rl.curFn)
+		if err == nil && rl.rotationSize <= fi.Size() {
+			forceNewFile = true
+			sizeRotation = true
+		}
 	}
-
 	if baseFn != rl.curBaseFn {
 		generation = 0
 		// even though this is the first write after calling New(),

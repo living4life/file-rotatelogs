@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/jonboulle/clockwork"
-	"github.com/lestrrat-go/file-rotatelogs/internal/fileutil"
 	"github.com/lestrrat-go/strftime"
+	"github.com/living4life/file-rotatelogs/internal/fileutil"
 	"github.com/stretchr/testify/assert"
 )
 
